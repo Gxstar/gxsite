@@ -3,33 +3,41 @@
 <!-- 文章列表展示区域 -->
 <div class="inner-box" id="article-list" v-if="list_seen">
     <div class="header">
-        <p style="color:#999">[[articleInfo]]</p>
-        <p style="color:#999;font-size:0.85rem;cursor: pointer;line-height: 2;" v-if="seen" @click="backtohome">返回文章首页
+        <p style="color:#999">最新文章</p>
+        <p style="color:#999;font-size:0.85rem;cursor: pointer;line-height: 2;">返回文章首页
         </p>
     </div>
-    <div class="article-body" v-for="article in list">
-        <div class="cover-img" v-bind:style="{'background-image':'url('+article.cover+')'}">
+    {% for article in article_list %}
+    <div class="article-body">  
+        <div class="cover-img" style="background-image:url({{article.cover}})">
         </div>
         <div class="show-article">
-            <h4><a @click="show_article(article.id)">[[article.title]]</a></h4>
-            <div v-html="article.body" class="intro"></div>
-            <footer class="info-text">[[article.category]]&nbsp;•&nbsp;<span>[[article.time]]</span>
+            <h4><a>{{article.title}}</a></h4>
+            <div class="intro">{{article.body|safe}}</div>
+            <footer class="info-text">{{article.category}}&nbsp;•&nbsp;<span>{{article.time}}</span>
             </footer>
-        </div>
+        </div> 
     </div>
+    {% endfor %}
 </div>
 <!-- 底部页码区域 -->
-<div id="page-zone" v-if="page_seen">
+<div id="page-zone">
     <ul id="page-list">
-        <a v-on:click="frontPage()">
+        <a>
             <li><i class="fas fa-angle-left"></i></li>
         </a>
-        <a v-for="(v,k) in pages.data" :key="k" v-on:click="changePage(v.num)" :class="{active:v.active}">
-            <li>[[v.num]]</li>
+        {% for page in page_list.data %}
+        <a>
+            <li id="pagenum{{page}}">{{page}}</li>
         </a>
-        <a v-on:click="nextPage()">
+        {% endfor %}
+        <a>
             <li><i class="fas fa-angle-right"></i></li>
         </a>
     </ul>
 </div>
+<script>
+    var active="pagenum"+"{{page_list.active}}";
+    $('#'+active).addClass("active");
+</script>
 {% endblock %}

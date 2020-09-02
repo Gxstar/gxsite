@@ -197,7 +197,7 @@ a:hover {
     cursor: pointer;
 }
 
-#page-list .active>li {
+#page-list .active {
     color: white;
     background-color: var(--blue);
 }

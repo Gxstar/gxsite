@@ -1,0 +1,14 @@
+{% load static %}
+<!-- 文章分类插件 -->
+<div class="slide">
+    <div class="cat inner-box" id="cat-list">
+        <div class="header">
+            <p style="color:#999;">文章分类</p>
+        </div>
+        <ul class="cat-list">
+            <li v-for="cat in cats[0]" v-on:click="cat_article(cat.id,cat.name)">
+                <p>[[cat.name]]</p><i>[[cat.count]]</i>
+            </li>
+        </ul>
+    </div>
+</div>

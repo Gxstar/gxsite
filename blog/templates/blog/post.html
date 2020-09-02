@@ -1,0 +1,17 @@
+<!-- 文章展示区域 -->
+<div id="article-zone" class="inner-box" v-if="article_seen">
+    <article class="post-body">
+        <header class="t-header" v-bind:style="{'background-image':'url('+article.cover+')'}">
+            <h3>[[article.title]]</h3>
+        </header>
+        <div class="content">
+            <p class="text-muted" style="font-size: 0.75rem;">
+                <span>作者：</span><a href="." class="text-muted">[[article.author]]</a><span> |
+                    &nbsp;分类：</span><a href="." class="text-muted">[[article.category]]</a><span>
+                    |&nbsp;发布于：</span><time>[[article.time]]</time>
+            </p>
+            <section v-html="article.body">
+            </section>
+        </div>
+    </article>
+</div>

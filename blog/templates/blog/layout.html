@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{% static 'blog/img/favicon.ico' %}" rel="icon" type="image/x-ico">
+    <!-- css静态资源 -->
+    <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.14.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'blog/css/blog.css' %}">
+    <!-- js资源 -->
+    <script src="https://cdn.staticfile.org/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.14.0/js/all.min.js"></script>
+    <title>阿星的小站</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="left sidebar">
+                <div class="inner-box slide">
+                    <div class="card-head">
+                        <img src="{% static 'blog/img/头像.jpg' %}" alt="头像" class="img-circle">
+                    </div>
+                    <h4 style="margin-top:15px;">阿星的小站</h4>
+                    <p class="info-text">日记、笔记、杂谈</p>
+                    <p>
+                        <span style="font-size: 1.25rem;letter-spacing: 10px;">
+                            <a href="tencent://message/?uin=296530510"><i class="fab fa-qq"></i></a>
+                            <a href="https://github.com/Gxstar"><i class="fab fa-github"></i></a>
+                            <a href="https://steamcommunity.com/home"><i class="fab fa-steam"></i></a>
+                        </span>
+                    </p>
+                    <ul class="fun-list" id="function">
+                        <a href="..">
+                            <li class="list-item">首页</li>
+                        </a>
+                        <a href=".">
+                            <li class="list-item">我的博客</li>
+                        </a>
+                        <a href=".">
+                            <li class="list-item">其他转载</li>
+                        </a>
+                        <a href="./about">
+                            <li class="list-item">关于</li>
+                        </a>
+                    </ul>
+                    <p class="info-text" style="padding-bottom:15px;">
+                        蜀ICP备20013547号
+                    </p>
+                </div>
+            </div>
+            <!-- 主体展示区域 -->
+            <div class="middle-body">
+                {% block list %}
+                {% endblock %}
+            </div>
+            <!-- 右侧边栏区域 -->
+            <div class="right sidebar">
+                {% include "blog/sidebar.html" %}
+            </div>
+        </div>
+    </div>
+    <!-- 尾部js -->
+    <script src="{% static 'blog/js/blog.js' %}"></script>
+</body>
+
+</html>

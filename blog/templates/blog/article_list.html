@@ -16,22 +16,22 @@
             <div class="intro">{{article.body|safe}}</div>
             <footer class="info-text">{{article.category}}&nbsp;•&nbsp;<span>{{article.time}}</span>
             </footer>
-        </div> 
+        </div>
     </div>
     {% endfor %}
 </div>
 <!-- 底部页码区域 -->
 <div id="page-zone">
     <ul id="page-list">
-        <a>
+        <a id="front">
             <li><i class="fas fa-angle-left"></i></li>
         </a>
         {% for page in page_list.data %}
-        <a>
+        <a href="/blog/?catid={{catid}}&page={{page}}">
             <li id="pagenum{{page}}">{{page}}</li>
         </a>
         {% endfor %}
-        <a>
+        <a id="next">
             <li><i class="fas fa-angle-right"></i></li>
         </a>
     </ul>
@@ -39,5 +39,18 @@
 <script>
     var active="pagenum"+"{{page_list.active}}";
     $('#'+active).addClass("active");
+    var active_num=parseInt("{{page_list.active}}");
+    if (active_num==1) {
+        $("#front").click(function(){alert("已经是第一页了！")});
+    }
+    else{
+        $("#front").attr("href","/blog/?catid={{catid}}&page="+(active_num-1));
+    };
+    if (active_num==parseInt("{{page_list.total}}")) {
+        $("#next").click(function(){alert("已经是最后一页了！")});
+    } 
+    else{
+        $("#next").attr("href","/blog/?catid={{catid}}&page="+(active_num+1));
+    };
 </script>
 {% endblock %}

@@ -11,6 +11,8 @@ def blog_home(request):
     '''
     博客首页
     '''
+    catid = 0 if request.GET.get("catid") is None else int(request.GET.get("catid"))
+    page = 1 if request.GET.get("page") is None else int(request.GET.get("page"))
     mobile = False  # 判断是否为移动设备
     devices = ["iPad", "iPhone", "Android"]
     user_agent = request.META.get('HTTP_USER_AGENT')
@@ -18,8 +20,8 @@ def blog_home(request):
         if i in user_agent:
             mobile = True
             break
-    article_list = get_article(1, 0)
-    page_list = get_page(0, 1)
+    article_list = get_article(page, catid)
+    page_list = get_page(catid, page)
     context = {
         "page": 1,
         "catid": 0,

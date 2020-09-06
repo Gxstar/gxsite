@@ -1,0 +1,31 @@
+{% load static %}
+<div class="img-head">
+    <a href="/"><img src="{% static 'blog/img/头像.jpg' %}" alt="头像"></a>
+</div>
+<h4 style="margin-top:15px;"><a href="/">阿星的小站</a></h4>
+<p class="info-text">日记、笔记、杂谈</p>
+<br>
+<p>
+    <span style="font-size: 1.5rem;letter-spacing: 1.5rem;">
+        <a href="tencent://message/?uin=296530510"><i class="fab fa-qq"></i></a>
+        <a href="https://github.com/Gxstar"><i class="fab fa-github"></i></a>
+        <a href="https://steamcommunity.com/home"><i class="fab fa-steam"></i></a>
+    </span>
+</p>
+<ul id="function">
+    <a href="/blog/">
+        <li>
+            <p>首页</p>
+        </li>
+    </a>
+    {% for cat in cats %}
+    <a href="/blog/?catid={{cat.id}}&page=1">
+        <li>
+            <p>{{cat.name}}</p>
+        </li>
+    </a>
+    {% endfor %}
+</ul>
+<p class="info-text" style="padding-bottom:15px;">
+    蜀ICP备20013547号
+</p>

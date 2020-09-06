@@ -3,7 +3,7 @@
 '''
 from bs4 import BeautifulSoup
 from django.shortcuts import render
-from blog.models import Article
+from blog.models import Article, Category
 # Create your views here.
 
 
@@ -11,8 +11,12 @@ def blog_home(request):
     '''
     博客首页
     '''
-    catid = 0 if request.GET.get("catid") is None else int(request.GET.get("catid"))
-    page = 1 if request.GET.get("page") is None else int(request.GET.get("page"))
+    catid = 0 if request.GET.get(
+        "catid") is None else int(request.GET.get("catid"))
+    catname = "最新文章" if request.GET.get(
+        "catid") is None else Category.objects.get(id=catid).name
+    page = 1 if request.GET.get(
+        "page") is None else int(request.GET.get("page"))
     mobile = False  # 判断是否为移动设备
     devices = ["iPad", "iPhone", "Android"]
     user_agent = request.META.get('HTTP_USER_AGENT')
@@ -25,12 +29,36 @@ def blog_home(request):
     context = {
         "page": 1,
         "catid": 0,
+        "catname": catname,
         "article_list": article_list,
-        "page_list": page_list
+        "page_list": page_list,
+        "cats": get_cats()
     }
     if mobile is False:
         return render(request, "blog/article_list.html", context)
     return render(request, "mblog/m_article_list.html", context)
+
+
+def article(request, article_id):
+    '''
+    展示文章
+    '''
+    post = Article.objects.filter(id=article_id)
+    if post[0] is not None:
+        context = {
+            "status": True,
+            "id": post[0].id,
+            "author": post[0].author.username,
+            "title": post[0].title,
+            "body": post[0].body,
+            "time": post[0].createTime.strftime('%Y年%m月%d日'),
+            "category": post[0].category.name,
+            "cover": post[0].cover,
+            "cats": get_cats()
+        }
+    else:
+        context = {"status": False}
+    return render(request, "blog/post.html", context)
 
 
 def get_article(page, catid):
@@ -88,3 +116,14 @@ def get_page(catid, active_page):
     pages["total"] = page_count
     pages["active"] = num_active_page
     return pages
+
+
+def get_cats():
+    '''
+    获取侧边栏分类列表的方法
+    '''
+    cat_list = []
+    for i in Category.objects.all():
+        cat_list.append(
+            {"id": i.id, "name": i.name, "count": Article.objects.filter(category=i).count()})
+    return cat_list

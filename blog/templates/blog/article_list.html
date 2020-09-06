@@ -1,18 +1,24 @@
 {% extends "blog/layout.html" %}
-{% block list %}
+{% block middle-body %}
 <!-- 文章列表展示区域 -->
-<div class="inner-box" id="article-list" v-if="list_seen">
+<div class="inner-box" id="article-list">
     <div class="header">
-        <p style="color:#999">最新文章</p>
-        <p style="color:#999;font-size:0.85rem;cursor: pointer;line-height: 2;">返回文章首页
+        <p style="color:#999">
+            {% ifequal catid '0' %}
+            最新文章
+            {% else %}
+            {{catname}}
+            {% endifequal %}
         </p>
+        <p><a href="/blog/" style="color:#999;font-size:0.85rem;line-height: 2;">返回文章首页
+            </a></p>
     </div>
     {% for article in article_list %}
-    <div class="article-body">  
+    <div class="article-body">
         <div class="cover-img" style="background-image:url({{article.cover}})">
         </div>
         <div class="show-article">
-            <h4><a>{{article.title}}</a></h4>
+            <h4><a href="/blog/post/{{article.id}}">{{article.title}}</a></h4>
             <div class="intro">{{article.body|safe}}</div>
             <footer class="info-text">{{article.category}}&nbsp;•&nbsp;<span>{{article.time}}</span>
             </footer>
@@ -37,20 +43,22 @@
     </ul>
 </div>
 <script>
-    var active="pagenum"+"{{page_list.active}}";
-    $('#'+active).addClass("active");
-    var active_num=parseInt("{{page_list.active}}");
-    if (active_num==1) {
-        $("#front").click(function(){alert("已经是第一页了！")});
-    }
-    else{
-        $("#front").attr("href","/blog/?catid={{catid}}&page="+(active_num-1));
+    var active = "pagenum" + "{{page_list.active}}";
+    $('#' + active).addClass("active");
+    var active_num = parseInt("{{page_list.active}}");
+    if (active_num == 1) {
+        $("#front").click(function () {
+            alert("已经是第一页了！")
+        });
+    } else {
+        $("#front").attr("href", "/blog/?catid={{catid}}&page=" + (active_num - 1));
     };
-    if (active_num==parseInt("{{page_list.total}}")) {
-        $("#next").click(function(){alert("已经是最后一页了！")});
-    } 
-    else{
-        $("#next").attr("href","/blog/?catid={{catid}}&page="+(active_num+1));
+    if (active_num == parseInt("{{page_list.total}}")) {
+        $("#next").click(function () {
+            alert("已经是最后一页了！")
+        });
+    } else {
+        $("#next").attr("href", "/blog/?catid={{catid}}&page=" + (active_num + 1));
     };
 </script>
 {% endblock %}

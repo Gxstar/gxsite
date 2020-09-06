@@ -29,12 +29,6 @@ h4{
     margin: 0 auto;
 }
 
-@media screen and (min-width:480px) {
-    .container {
-        margin-top: 3rem;
-        width: 85% !important;
-    }
-}
 
 .row {
     display: flex;
@@ -213,7 +207,7 @@ a:hover {
     text-align: left;
 }
 
-.cat-list>li {
+.cat-list li {
     line-height: 2.5;
     list-style: none;
     color: #666;
@@ -222,13 +216,12 @@ a:hover {
     justify-content: space-around;
 }
 
-.cat-list>li:hover {
+.cat-list li:hover {
     background-color: var(--blue);
     color: #fff;
-    cursor: pointer;
 }
 
-.cat-list>li:hover>i {
+.cat-list li:hover>i {
     background: white;
     color: var(--blue);
 }
@@ -284,5 +277,9 @@ a:hover {
 .content p {
     font-size: 1rem;
     line-height: 1.6;
-    letter-spacing: 1px;
+    letter-spacing: .5px;
+    color:#666;
+}
+.content a{
+    color:#666;
 }

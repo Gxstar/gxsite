@@ -6,9 +6,13 @@
             <p style="color:#999;">文章分类</p>
         </div>
         <ul class="cat-list">
-            <li v-for="cat in cats[0]" v-on:click="cat_article(cat.id,cat.name)">
-                <p>[[cat.name]]</p><i>[[cat.count]]</i>
-            </li>
+            {% for cat in cats %}
+            <a href="/blog/?catid={{cat.id}}&page=1">
+                <li>
+                    <p>{{cat.name}}</p><i>{{cat.count}}</i>
+                </li>
+            </a>
+            {% endfor %}
         </ul>
     </div>
 </div>

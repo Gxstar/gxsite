@@ -1,2 +1,31 @@
-{% block list %}
-{% endblock %}
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <link href="{% static 'blog/img/favicon.ico' %}" rel="icon" type="image/x-ico">
+    <!-- css静态资源 -->
+    <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.14.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'blog/css/mblog.css' %}">
+    <!-- js资源 -->
+    <script src="https://cdn.staticfile.org/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.14.0/js/all.min.js"></script>
+    <script src="{% static 'blog/js/mblog.js' %}"></script>
+    <title>阿星的小站</title>
+</head>
+<body>
+    <header>
+        <div class="bar"><i class="fas fa-bars"></i></div>
+        <p>阿星的小站</p>  
+    </header>
+    <div class="sidebar">
+        {% include "mblog/m_sidebar.html" %}
+    </div>
+    <div class="main-body">
+        {% block content %}
+        {% endblock %}
+    </div>
+    <div id="mask"></div>
+</body>
+</html>

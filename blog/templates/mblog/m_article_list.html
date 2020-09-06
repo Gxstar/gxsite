@@ -1,13 +1,53 @@
-<!DOCTYPE html>
-<html lang="zh-cn">
-<head>
-    {% load static %}
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <link href="{% static 'blog/img/favicon.ico' %}" rel="icon" type="image/x-ico">
-    <title>阿星的小站</title>
-</head>
-<body>
-    测试
-</body>
-</html>
+{% extends "mblog/m_layout.html" %}
+{% block content %}
+<!-- 文章列表展示区域 -->
+<div class="inner-box" id="article-list">
+    {% for article in article_list %}
+    <div class="article-body">
+        <div class="cover-img" style="background-image:url({{article.cover}})">
+        </div>
+        <div class="show-article">
+            <h4><a href="/blog/post/{{article.id}}">{{article.title}}</a></h4>
+            <div class="intro">{{article.body|safe}}</div>
+            <footer class="info-text">{{article.category}}&nbsp;•&nbsp;<span>{{article.time}}</span>
+            </footer>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+<!-- 底部页码区域 -->
+<div id="page-zone">
+    <ul id="page-list">
+        <a id="front">
+            <li><i class="fas fa-angle-left"></i></li>
+        </a>
+        {% for page in page_list.data %}
+        <a href="/blog/?catid={{catid}}&page={{page}}">
+            <li id="pagenum{{page}}">{{page}}</li>
+        </a>
+        {% endfor %}
+        <a id="next">
+            <li><i class="fas fa-angle-right"></i></li>
+        </a>
+    </ul>
+</div>
+<script>
+    var active = "pagenum" + "{{page_list.active}}";
+    $('#' + active).addClass("active");
+    var active_num = parseInt("{{page_list.active}}");
+    if (active_num == 1) {
+        $("#front").click(function () {
+            alert("已经是第一页了！")
+        });
+    } else {
+        $("#front").attr("href", "/blog/?catid={{catid}}&page=" + (active_num - 1));
+    };
+    if (active_num == parseInt("{{page_list.total}}")) {
+        $("#next").click(function () {
+            alert("已经是最后一页了！")
+        });
+    } else {
+        $("#next").attr("href", "/blog/?catid={{catid}}&page=" + (active_num + 1));
+    };
+</script>
+{% endblock %}

@@ -19,15 +19,8 @@ def blog_home(request):
         id=catid).name
     page = 1 if request.GET.get(
         "page") is None else int(request.GET.get("page"))
-    # 判断是否为移动设备默认为非移动设备
-    mobile = False
-    devices = ["iPad", "iPhone", "Android"]
-    user_agent = request.META.get('HTTP_USER_AGENT')
-    for i in devices:
-        if i in user_agent:
-            mobile = True
-            break
-    article_list = get_article(page, catid)
+    mobile = is_mobile(request)
+    article_list = get_article(page, catid, mobile)
     page_list = get_page(catid, page)
     context = {
         "page": 1,
@@ -61,14 +54,33 @@ def article(request, article_id):
         }
     else:
         context = {"status": False}
-    return render(request, "blog/post.html", context)
+    mobile = is_mobile(request)
+    if mobile is False:
+        return render(request, "blog/post.html", context)
+    else:
+        return render(request, "mblog/m_post.html", context)
 
 
-def get_article(page, catid):
+def is_mobile(request):
+    '''
+    判断是否为移动设备默认为非移动设备
+    '''
+    mobile = False
+    devices = ["iPad", "iPhone", "Android"]
+    user_agent = request.META.get('HTTP_USER_AGENT')
+    for i in devices:
+        if i in user_agent:
+            mobile = True
+            break
+    return mobile
+
+
+def get_article(page, catid, mobile):
     '''
     文章获取方法
     '''
     context = []
+    words = 80 if mobile is True else 120  # 设置文章列表简介字数
     if catid == 0:
         article_list = Article.objects.all()[(page-1)*4:page*4]
     else:
@@ -81,7 +93,7 @@ def get_article(page, catid):
         temp['cover'] = i.cover if i.cover is not None else BeautifulSoup(
             i.body, "lxml").find('img')['src']
         temp['body'] = BeautifulSoup(
-            i.body, "lxml").get_text().strip()[0:100]+"......"
+            i.body, "lxml").get_text().strip()[0:words]+"......"
         temp['time'] = i.createTime.strftime('%Y-%m-%d')
         temp['category'] = i.category.name
         context.append(temp)

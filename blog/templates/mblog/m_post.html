@@ -1,0 +1,20 @@
+{% extends "mblog/m_layout.html" %}
+{% block content %}
+{% if status %}
+<!-- 文章展示区域 -->
+<article class="article-body m-article" style="margin-top: 1rem;">
+    <header class="t-header" style="background-image:url({{cover}})">
+        <h3>{{title}}</h3>
+    </header>
+    <div style="padding:5px;">
+        <ul class="article-info">
+            <li><i class="fas fa-user"></i><span>{{author}}</span></li>
+            <li><i class="fas fa-tags"></i><span>{{category}}</span></li>
+            <li><i class="fas fa-calendar-alt"></i><time>{{time}}</time></li>
+        </ul>
+        <section>{{body|safe}}
+        </section>
+    </div>
+</article>
+{% endif %}
+{% endblock %}

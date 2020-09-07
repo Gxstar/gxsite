@@ -1,6 +1,7 @@
 /* 公共样式 */
 :root {
-    --mcolor: rgb(0, 150, 136);
+    /* --mcolor: rgb(0, 150, 136); */
+    --mcolor: #66ccff;
 }
 
 body {
@@ -55,7 +56,7 @@ header>div{
     display: flex;
     flex-direction: column;
     text-align: center;
-    padding-top: 1.5rem;
+    justify-content: center;
 }
 .sidebar ul{
     list-style-type: none;
@@ -83,6 +84,54 @@ header>div{
 }
 /* 主体部分 */
 .main-body{
-    padding:10px 20px;
+    padding:5px 20px;
     margin-top:4rem;
+}
+.cover-img {
+    width: 100%;
+    height: calc(17vh);
+    display: block;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+.article-body{
+    border:1px solid #999;
+    border-radius: 10px;
+    margin-top: 2rem;
+    box-shadow: 0 0 8px #999;
+}
+.show-article{
+    padding:0px .75rem .75rem;
+}
+/* 页码处理区域 */
+#page-zone {
+    text-align: center;
+}
+
+#page-list {
+    display: inline-block;
+    margin-top: 1.5rem;
+    padding: 0;
+}
+
+#page-list li {
+    display: block;
+    float: left;
+    margin: 0px 15px;
+    padding: 10px 15px;
+    border:1px solid gray;
+    border-radius: 5px;
+    background-color: #fff;
+}
+
+#page-list li:hover {
+    background-color: var(--mcolor);
+    color: white;
+}
+#page-list .active {
+    color: white;
+    background-color: var(--mcolor);
 }

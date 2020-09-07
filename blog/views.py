@@ -11,13 +11,16 @@ def blog_home(request):
     '''
     博客首页
     '''
-    catid = 0 if request.GET.get(
-        "catid") is None else int(request.GET.get("catid"))
-    catname = "最新文章" if request.GET.get(
-        "catid") is None else Category.objects.get(id=catid).name
+    t_catid = request.GET.get(
+        "catid")
+    catid = 0 if t_catid is None or t_catid == '0' else int(
+        request.GET.get("catid"))
+    catname = "最新文章" if t_catid is None or t_catid == '0' else Category.objects.get(
+        id=catid).name
     page = 1 if request.GET.get(
         "page") is None else int(request.GET.get("page"))
-    mobile = False  # 判断是否为移动设备
+    # 判断是否为移动设备默认为非移动设备
+    mobile = False
     devices = ["iPad", "iPhone", "Android"]
     user_agent = request.META.get('HTTP_USER_AGENT')
     for i in devices:

@@ -80,7 +80,7 @@ def get_article(page, catid, mobile):
     文章获取方法
     '''
     context = []
-    words = 80 if mobile is True else 120  # 设置文章列表简介字数
+    words = 80 if mobile is True else 80  # 设置文章列表简介字数
     if catid == 0:
         article_list = Article.objects.all()[(page-1)*4:page*4]
     else:

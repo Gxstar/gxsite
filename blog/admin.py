@@ -1,4 +1,6 @@
-# 后台模型注册页面
+'''
+后台模型注册页面
+'''
 from django.contrib import admin
 from .models import Category, Article
 # Register your models here.

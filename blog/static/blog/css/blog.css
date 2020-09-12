@@ -17,6 +17,15 @@ h4{
     margin:0;
 }
 
+pre{
+    padding:10px;
+    border:1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+}
+code{
+    font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+}
 .info-text {
     font-size: 0.75rem;
     color: #999;
@@ -267,18 +276,21 @@ a:hover {
 .content {
     padding: 15px 25px;
 }
-
+.content p{
+    letter-spacing: 1.75px;
+    color: #666;
+}
 .content img {
     display: block;
     max-width: 100% !important;
     margin: 0 auto;
 }
 
-.content p {
-    font-size: 1rem;
-    line-height: 1.6;
+.text-muted{
+    font-size: 0.75rem;
     letter-spacing: .5px;
-    color:#666;
+    color: #666;
+    line-height: 1.6;
 }
 .content a{
     color:#666;

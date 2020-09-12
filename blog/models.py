@@ -3,8 +3,8 @@
 '''
 from django.contrib.auth.models import User
 from django.db import models
-from ckeditor.fields import RichTextField
-
+# from ckeditor.fields import RichTextField
+from mdeditor.fields import MDTextField
 # Create your models here.
 
 
@@ -47,7 +47,8 @@ class Article(models.Model):
         User, on_delete=models.CASCADE, verbose_name='用户')
     cover = models.URLField(
         '封面地址', default='https://i.loli.net/2020/04/08/IHWehlbkQ5nxEma.jpg')
-    body = RichTextField()
+    # body = RichTextField()
+    body = MDTextField()
     tag = models.ManyToManyField(Tag, verbose_name='文章标签', blank=True)
     createTime = models.DateTimeField('创建时间', auto_now_add=True)
     updateTime = models.DateTimeField('修改时间', auto_now=True)
@@ -69,7 +70,7 @@ class Comment(models.Model):
     '''
     article = models.ForeignKey(
         Article, on_delete=models.DO_NOTHING, verbose_name='评论', blank=True, null=True)
-    body = RichTextField()
+    body = MDTextField()
 
     class Meta:
         verbose_name = "评论"

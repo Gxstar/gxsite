@@ -1,9 +1,11 @@
 '''
 博客视图应用
 '''
+import markdown
 from bs4 import BeautifulSoup
 from django.shortcuts import render
 from blog.models import Article, Category
+
 # Create your views here.
 
 
@@ -46,7 +48,12 @@ def article(request, article_id):
             "id": post[0].id,
             "author": post[0].author.username,
             "title": post[0].title,
-            "body": post[0].body,
+            "body": markdown.markdown(post[0].body, extensions=[
+                'markdown.extensions.extra',
+                'markdown.extensions.codehilite',
+                'markdown.extensions.toc',
+                'markdown.extensions.tables',
+            ]),
             "time": post[0].createTime.strftime('%Y年%m月%d日'),
             "category": post[0].category.name,
             "cover": post[0].cover,
@@ -80,7 +87,7 @@ def get_article(page, catid, mobile):
     文章获取方法
     '''
     context = []
-    words = 80 if mobile is True else 80  # 设置文章列表简介字数
+    words = 80 if mobile is True else 100  # 设置文章列表简介字数
     if catid == 0:
         article_list = Article.objects.all()[(page-1)*4:page*4]
     else:
@@ -90,10 +97,16 @@ def get_article(page, catid, mobile):
         temp = {}
         temp['id'] = i.id
         temp['title'] = i.title
+        body = markdown.markdown(i.body, extensions=[
+            'markdown.extensions.extra',
+            'markdown.extensions.codehilite',
+            'markdown.extensions.toc',
+            'markdown.extensions.tables',
+        ])
         temp['cover'] = i.cover if i.cover is not None else BeautifulSoup(
-            i.body, "lxml").find('img')['src']
+            body, "lxml").find('img')['src']
         temp['body'] = BeautifulSoup(
-            i.body, "lxml").get_text().strip()[0:words]+"......"
+            body, "lxml").get_text().strip()[0:words]+"......"
         temp['time'] = i.createTime.strftime('%Y-%m-%d')
         temp['category'] = i.category.name
         context.append(temp)

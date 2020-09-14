@@ -17,15 +17,51 @@
             </section>
         </div>
     </article>
+    <div class="show-comments">
+        {% for comment in comments.comments %}
+        <div class="com">
+            <div class="com-author">
+                {{comment.fields.author}}
+            </div>
+            <div class="com-body">
+                {{comment.fields.body}}
+            </div>
+        </div>
+        {% endfor %}
+        <!-- 评论页码区域 -->
+        <div id="page-zone">
+            <ul id="page-list">
+                <li id="front"><i class="fas fa-angle-left"></i></li>
+                {% for page in comments.page_list %}
+                <li id="pagenum{{id}}"><button onclick="jump('{{page}}')">{{page}}</button></li>
+                {% endfor %}
+                <li id="next"><i class="fas fa-angle-right"></i></li>
+            </ul>
+        </div>
+        <script>
+            var active = "pagenum" + "{{comments.active_page}}";
+            $('#' + active).addClass("active");
+            var active_num = parseInt("{{comments.active_page}}");
+            if (active_num == 1) {
+                $("#front").click(function () {
+                    alert("已经是第一页了！")
+                });
+            } else {
+                $("#front").attr("href", "/blog/?postid={{id}}&page=" + (active_num - 1));
+            };
+            if (active_num == parseInt("{{page_list.total}}")) {
+                $("#next").click(function () {
+                    alert("已经是最后一页了！")
+                });
+            } else {
+                $("#next").attr("href", "/blog/?postid={{id}}&page=" + (active_num + 1));
+            };
+        </script>
+    </div>
+    <div class="new-comments">
+
+    </div>
+
 </div>
-<!--PC版-->
-<div id="SOHUCS" sid="post{{id}}"></div>
-<script charset="utf-8" type="text/javascript" src="https://cy-cdn.kuaizhan.com/upload/changyan.js"></script>
-<script type="text/javascript">
-    window.changyan.api.config({
-        appid: 'cyuRWVFza',
-        conf: 'prod_59c59ec88fce178337db42afc1ff9d72'
-    });
-</script>
 {% endif %}
 {% endblock %}

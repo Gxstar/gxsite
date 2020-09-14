@@ -22,6 +22,7 @@ pre{
     border:1px solid #ddd;
     border-radius: 5px;
     font-size: 14px;
+    line-height: 1.5;
 }
 code{
     font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;

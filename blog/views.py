@@ -1,10 +1,12 @@
 '''
 博客视图应用
 '''
-import markdown
+import markdown, json
 from bs4 import BeautifulSoup
-from django.shortcuts import render
-from blog.models import Article, Category
+from django.core.serializers import serialize
+from django.shortcuts import render, get_object_or_404
+from django.http import JsonResponse
+from blog.models import Article, Category, Comments
 
 # Create your views here.
 
@@ -41,23 +43,24 @@ def article(request, article_id):
     '''
     展示文章
     '''
-    post = Article.objects.filter(id=article_id)
-    if post[0] is not None:
+    post = get_object_or_404(Article, id=article_id)
+    if post is not None:
         context = {
             "status": True,
-            "id": post[0].id,
-            "author": post[0].author.username,
-            "title": post[0].title,
-            "body": markdown.markdown(post[0].body, extensions=[
+            "id": post.id,
+            "author": post.author.username,
+            "title": post.title,
+            "body": markdown.markdown(post.body, extensions=[
                 'markdown.extensions.extra',
                 'markdown.extensions.codehilite',
                 'markdown.extensions.toc',
                 'markdown.extensions.tables',
             ]),
-            "time": post[0].createTime.strftime('%Y年%m月%d日'),
-            "category": post[0].category.name,
-            "cover": post[0].cover,
-            "cats": get_cats()
+            "time": post.createTime.strftime('%Y年%m月%d日'),
+            "category": post.category.name,
+            "cover": post.cover.url,
+            "comments": get_comments(post.id, 1),
+            "cats": get_cats(),
         }
     else:
         context = {"status": False}
@@ -84,7 +87,7 @@ def is_mobile(request):
 
 def get_article(page, catid, mobile):
     '''
-    文章获取方法
+    文章列表获取方法
     '''
     context = []
     words = 80 if mobile is True else 100  # 设置文章列表简介字数
@@ -118,10 +121,10 @@ def get_page(catid, active_page):
     获取总共页数
     '''
     if catid == 0:
-        page_count = int(Article.objects.count()/4)+1
+        page_count = int(Article.objects.count()/4.1)+1
     else:
         page_count = int(Article.objects.filter(
-            category__id=catid).count()/4)+1
+            category__id=catid).count()/4.1)+1
     pages = {}
     pages["data"] = []
     num_active_page = int(active_page)
@@ -155,3 +158,42 @@ def get_cats():
         cat_list.append(
             {"id": i.id, "name": i.name, "count": Article.objects.filter(category=i).count()})
     return cat_list
+
+
+def get_comments(article_id, active_page):
+    '''
+    获得评论
+    '''
+    comments = Comments.objects.filter(article__id=article_id)[
+        (active_page-1)*5:active_page*5]
+    count = comments.count()  # 评论数
+    json_data = serialize('json', comments)
+    comments = json.loads(json_data)
+    page_count = int(count/5.1)+1  # 评论页数
+    pages = []  # 传递到前端的页码列表
+    active_page = int(active_page)
+    if page_count <= 5:
+        for i in range(page_count):
+            pages.insert(i, i+1)
+    else:
+        if active_page >= page_count-4:
+            for i in range(5):
+                pages.insert(
+                    i, page_count-4+i)
+        elif 2 < active_page < page_count-4:
+            for i in range(5):
+                pages.insert(
+                    i, active_page-2+i)
+        else:
+            for i in range(5):
+                pages.insert(
+                    i, i+1)
+    return {"comments": comments, "active_page": active_page, "total": page_count, "page_list": pages}
+
+
+def get_new_comment(request, article_id):
+    '''
+    获取指定文章指定页码评论
+    '''
+    page = int(request.GET.get('page'))
+    return JsonResponse(get_comments(article_id, page))

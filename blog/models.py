@@ -45,9 +45,11 @@ class Article(models.Model):
     title = models.CharField('标题', max_length=100)
     author = models.ForeignKey(
         User, on_delete=models.CASCADE, verbose_name='用户')
-    cover = models.URLField(
-        '封面地址', default='https://i.loli.net/2020/04/08/IHWehlbkQ5nxEma.jpg')
+    # cover = models.URLField(
+    # '封面地址', default='https://i.loli.net/2020/04/08/IHWehlbkQ5nxEma.jpg')
     # body = RichTextField()
+    cover = models.ImageField(
+        upload_to="cover", default="cover/timg.jpg")
     body = MDTextField()
     tag = models.ManyToManyField(Tag, verbose_name='文章标签', blank=True)
     createTime = models.DateTimeField('创建时间', auto_now_add=True)
@@ -64,14 +66,19 @@ class Article(models.Model):
         return self.title
 
 
-class Comment(models.Model):
+class Comments(models.Model):
     '''
-    文章评论，与文章的关系为一对多
+    文章评论
     '''
+    author = models.CharField(verbose_name="评论作者", max_length=50)
+    email = models.EmailField(verbose_name="邮箱地址")
     article = models.ForeignKey(
-        Article, on_delete=models.DO_NOTHING, verbose_name='评论', blank=True, null=True)
-    body = MDTextField()
+        Article, on_delete=models.DO_NOTHING, verbose_name='对应文章', blank=True, null=True)
+    body = MDTextField(verbose_name="评论内容",max_length=256)
+    createTime = models.DateTimeField('创建时间', auto_now_add=True)
+    updateTime = models.DateTimeField('修改时间', auto_now=True)
 
     class Meta:
         verbose_name = "评论"
         verbose_name_plural = verbose_name
+        ordering = ('-createTime',)

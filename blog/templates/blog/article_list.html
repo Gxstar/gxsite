@@ -15,7 +15,7 @@
     </div>
     {% for article in article_list %}
     <div class="article-body">
-        <div class="cover-img" style="background-image:url({{article.cover}})">
+        <div class="cover-img" style="background-image:url({{article.cover.url}})">
         </div>
         <div class="show-article">
             <h4><a href="/blog/post/{{article.id}}">{{article.title}}</a></h4>

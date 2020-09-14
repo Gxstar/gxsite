@@ -1,0 +1,10 @@
+.show-comments{
+    border-top: 1px solid #cecece;
+    padding: 15px 15px;
+}
+.com{
+    margin: 10px auto;
+    border: 1px solid #d4d4d4;
+    border-radius: 10px;
+    padding:10px;
+}

@@ -1,12 +1,15 @@
 '''
 博客视图应用
 '''
-import markdown, json
+
+import json
+import markdown
 from bs4 import BeautifulSoup
 from django.core.serializers import serialize
 from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
 from blog.models import Article, Category, Comments
+from .form import CaptchaForm
 
 # Create your views here.
 
@@ -61,6 +64,7 @@ def article(request, article_id):
             "cover": post.cover.url,
             "comments": get_comments(post.id, 1),
             "cats": get_cats(),
+            "capform":CaptchaForm,
         }
     else:
         context = {"status": False}
@@ -166,7 +170,7 @@ def get_comments(article_id, active_page):
     '''
     comments = Comments.objects.filter(article__id=article_id)[
         (active_page-1)*5:active_page*5]
-    count = comments.count()  # 评论数
+    count = Comments.objects.count()  # 评论数
     json_data = serialize('json', comments)
     comments = json.loads(json_data)
     page_count = int(count/5.1)+1  # 评论页数
@@ -188,7 +192,12 @@ def get_comments(article_id, active_page):
             for i in range(5):
                 pages.insert(
                     i, i+1)
-    return {"comments": comments, "active_page": active_page, "total": page_count, "page_list": pages}
+    return {
+        "comments": comments,
+        "active_page": active_page,
+        "total": page_count,
+        "page_list": pages
+    }
 
 
 def get_new_comment(request, article_id):

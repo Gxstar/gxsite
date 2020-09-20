@@ -188,6 +188,7 @@ code{
     margin: 0px 15px;
     padding: 10px 15px;
     border-radius: 5px;
+    border:1px solid var(--gray);
     background-color: #fff;
 }
 

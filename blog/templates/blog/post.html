@@ -18,13 +18,14 @@
         </div>
     </article>
     <div class="show-comments">
+        <p id="com-header">文章评论</p>
         {% for comment in comments.comments %}
         <div class="com">
             <div class="com-author">
-                {{comment.fields.author}}
+                <p>{{comment.fields.author}}</p>
             </div>
             <div class="com-body">
-                {{comment.fields.body}}
+                <p>{{comment.fields.body}}</p>
             </div>
         </div>
         {% endfor %}
@@ -33,33 +34,40 @@
             <ul id="page-list">
                 <li id="front"><i class="fas fa-angle-left"></i></li>
                 {% for page in comments.page_list %}
-                <li id="pagenum{{id}}"><button onclick="jump('{{page}}')">{{page}}</button></li>
+                <li id="pagenum{{page}}" onclick="jump('{{page}}',this)">{{page}}</li>
                 {% endfor %}
                 <li id="next"><i class="fas fa-angle-right"></i></li>
             </ul>
         </div>
         <script>
             var active = "pagenum" + "{{comments.active_page}}";
-            $('#' + active).addClass("active");
-            var active_num = parseInt("{{comments.active_page}}");
-            if (active_num == 1) {
-                $("#front").click(function () {
-                    alert("已经是第一页了！")
-                });
-            } else {
-                $("#front").attr("href", "/blog/?postid={{id}}&page=" + (active_num - 1));
-            };
-            if (active_num == parseInt("{{page_list.total}}")) {
-                $("#next").click(function () {
-                    alert("已经是最后一页了！")
-                });
-            } else {
-                $("#next").attr("href", "/blog/?postid={{id}}&page=" + (active_num + 1));
-            };
+            $("#" + active).addClass("active");
+            var first = parseInt("{{comments.page_list.0}}");
         </script>
     </div>
-    <div class="new-comments">
-
+    <div class="new-comment">
+        <form action="sub-com" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="c-author">昵称</label>
+                <input type="text" name="c-author" id="c-author">
+            </div>
+            <div class="form-group">
+                <label for="c-email">邮箱</label>
+                <input type="c-email" name="c-email" id="c-email">
+            </div>
+            <div class="form-group">
+                <label for="c-body" style="display: block;line-height: 1.5;">评论</label>
+                <textarea cols="85" rows="5" name="c-body" id="c-body"></textarea>
+            </div>
+            <div class="form-group">
+                {{ capform.captcha.label_tag }}
+                {{ capform.captcha }}
+            </div>
+            <div class="form-group">
+                <input type="submit" name="subbtn" id="subbtn">
+            </div>
+        </form>
     </div>
 
 </div>

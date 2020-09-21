@@ -9,6 +9,7 @@ from django.core.serializers import serialize
 from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
 from blog.models import Article, Category, Comments
+from blog.form import CaptchaForm
 from .form import CaptchaForm
 
 # Create your views here.
@@ -64,7 +65,7 @@ def article(request, article_id):
             "cover": post.cover.url,
             "comments": get_comments(post.id, 1),
             "cats": get_cats(),
-            "capform":CaptchaForm,
+            "capform": CaptchaForm,
         }
     else:
         context = {"status": False}
@@ -206,3 +207,16 @@ def get_new_comment(request, article_id):
     '''
     page = int(request.GET.get('page'))
     return JsonResponse(get_comments(article_id, page))
+
+
+def new_comment(request, article_id):
+    '''
+    给指定文章添加评论
+    '''
+    comment = {}
+    form = CaptchaForm(request.POST)
+    if form.is_valid():
+        comment['status'] = 'success'
+    else:
+        comment['status'] = 'error'
+    return JsonResponse(comment)

@@ -53,4 +53,24 @@ $(function () {
             jump(loc,$("#pagenum"+loc));
         }
     });
+    $("#subbtn").click(function(){
+        // 点击提交评论
+        var result={};
+        $.ajax({
+            type: "POST",
+            url: "new_comment/",
+            dataType: "json",
+            data: {
+                username:$('#id_username').val(),
+                email:$('#id_email').val(),
+                body:$('#id_body').val(),
+                captcha_1: $('#id_captcha_1').val(),
+                captcha_0: $('#id_captcha_0').val(),
+            },
+            async: false,
+            success: function (result) {
+                a = result;
+            },
+        });
+    });
 })

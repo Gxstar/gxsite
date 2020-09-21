@@ -23,7 +23,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.show_home),
     path('blog/', include('blog.urls')),
-    path('mdeditor/', include('mdeditor.urls'))
+    path('mdeditor/', include('mdeditor.urls')),
+    path('captcha/', include('captcha.urls')),
 ]
 
 if settings.DEBUG:

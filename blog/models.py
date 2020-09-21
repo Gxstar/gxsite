@@ -48,9 +48,9 @@ class Article(models.Model):
     # cover = models.URLField(
     # '封面地址', default='https://i.loli.net/2020/04/08/IHWehlbkQ5nxEma.jpg')
     # body = RichTextField()
-    cover = models.ImageField(
-        upload_to="cover", default="cover/timg.jpg")
-    body = MDTextField()
+    cover = models.ImageField('封面',
+                              upload_to="cover", default="cover/timg.jpg")
+    body = MDTextField(verbose_name='文章正文')
     tag = models.ManyToManyField(Tag, verbose_name='文章标签', blank=True)
     createTime = models.DateTimeField('创建时间', auto_now_add=True)
     updateTime = models.DateTimeField('修改时间', auto_now=True)
@@ -74,7 +74,7 @@ class Comments(models.Model):
     email = models.EmailField(verbose_name="邮箱地址")
     article = models.ForeignKey(
         Article, on_delete=models.DO_NOTHING, verbose_name='对应文章', blank=True, null=True)
-    body = MDTextField(verbose_name="评论内容",max_length=256)
+    body = MDTextField(verbose_name="评论内容", max_length=256)
     createTime = models.DateTimeField('创建时间', auto_now_add=True)
     updateTime = models.DateTimeField('修改时间', auto_now=True)
 

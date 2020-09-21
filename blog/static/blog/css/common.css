@@ -29,8 +29,24 @@
     border-top:1px solid #cecece;
 }
 .form-group{
-    padding:15px;
+    padding:5px;
+}
+.form-group>label{
+    display: block;
+    line-height: 1.5;
+}
+.form-group>input,.form-group>textarea{
+    line-height: 1.75;
+    border: 1px solid gray;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+.form-group>input:focus,.form-group>textarea:focus{
+    border: 1px solid var(--blue);
+    outline: 0;
+    box-shadow: 0 0 0 .2rem rgba(0, 123, 255, .25);
 }
 #c-body{
-    max-width: 100%;
+    width: 100%;
+    height:6rem;
 }

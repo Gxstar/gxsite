@@ -19,6 +19,7 @@
     </article>
     <div class="show-comments">
         <p id="com-header">文章评论</p>
+        {% if comments.comments %}
         {% for comment in comments.comments %}
         <div class="com">
             <div class="com-author">
@@ -29,6 +30,11 @@
             </div>
         </div>
         {% endfor %}
+        {% else %}
+        <div class="no-warning" style="text-align: center;">
+            暂无评论~~~
+        </div>
+        {% endif %}
         <!-- 评论页码区域 -->
         <div id="page-zone">
             <ul id="page-list">
@@ -57,12 +63,22 @@
                 <input type="c-email" name="c-email" id="c-email">
             </div>
             <div class="form-group">
-                <label for="c-body" style="display: block;line-height: 1.5;">评论</label>
-                <textarea cols="85" rows="5" name="c-body" id="c-body"></textarea>
+                <label for="c-body">评论</label>
+                <textarea name="c-body" id="c-body"></textarea>
             </div>
             <div class="form-group">
                 {{ capform.captcha.label_tag }}
                 {{ capform.captcha }}
+                <script>
+                    $('.captcha').click(function () {
+                        $.getJSON("/captcha/refresh/", function (result) {
+                            $('.captcha').attr('src', result['image_url']);
+                            $('#id_captcha_0').val(result['key'])
+                        });
+
+
+                    });
+                </script>
             </div>
             <div class="form-group">
                 <input type="submit" name="subbtn" id="subbtn">

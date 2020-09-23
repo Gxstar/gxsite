@@ -1,7 +1,9 @@
 {% extends "mblog/m_layout.html" %}
+{% load static %}
 {% block content %}
 {% if status %}
 <!-- 文章展示区域 -->
+<script src="{% static 'blog/js/blog.js' %}"></script>
 <article class="article-body m-article" style="margin-top: 1rem;">
     <header class="t-header" style="background-image:url({{cover}})">
         <h3>{{title}}</h3>
@@ -16,5 +18,79 @@
         </section>
     </div>
 </article>
+<div class="show-comments" style="padding-top: 1rem;">
+    <p id="com-header">文章评论</p>
+    {% if comments.comments %}
+    {% for comment in comments.comments %}
+    <div class="com">
+        <div class="com-author">
+            <p>昵称：{{comment.fields.author}}</p>
+            <p>评论于{{comment.fields.createTime}}</p>
+        </div>
+        <div class="com-body">
+            <p>{{comment.fields.body}}</p>
+        </div>
+    </div>
+    {% endfor %}
+    {% else %}
+    <div class="no-warning" style="text-align: center;">
+        暂无评论~~~
+    </div>
+    {% endif %}
+    <!-- 评论页码区域 -->
+    <div id="page-zone">
+        <ul id="page-list">
+            <li id="front"><i class="fas fa-angle-left"></i></li>
+            {% for page in comments.page_list %}
+            <li id="pagenum{{page}}" onclick="jump('{{page}}',this)" class="pageicon">{{page}}</li>
+            {% endfor %}
+            <li id="next"><i class="fas fa-angle-right"></i></li>
+        </ul>
+    </div>
+    <script>
+        var active = "pagenum" + "{{comments.active_page}}";
+        $("#" + active).addClass("active");
+        var first = parseInt("{{comments.page_list.0}}");
+    </script>
+</div>
+<script>
+    $.ajaxSetup({
+        data: {
+            csrfmiddlewaretoken: '{{ csrf_token }}'
+        }
+    })
+</script>
+<div class="new-comment">
+    <form action="" method="post" οnsubmit="return false;">
+        {% csrf_token %}
+        <div class="form-group">
+            {{ capform.username.label_tag }}
+            {{ capform.username }}
+        </div>
+        <div class="form-group">
+            {{ capform.email.label_tag }}
+            {{ capform.email }}
+        </div>
+        <div class="form-group">
+            {{ capform.body.label_tag }}
+            {{ capform.body }}
+        </div>
+        <div class="form-group">
+            {{ capform.captcha.label_tag }}
+            {{ capform.captcha }}
+            <script>
+                $('.captcha').click(function () {
+                    $.getJSON("/captcha/refresh/", function (result) {
+                        $('.captcha').attr('src', result['image_url']);
+                        $('#id_captcha_0').val(result['key'])
+                    });
+                });
+            </script>
+        </div>
+        <div class="form-group">
+            <input type="button" name="subbtn" id="subbtn" value="提交">
+        </div>
+    </form>
+</div>
 {% endif %}
 {% endblock %}

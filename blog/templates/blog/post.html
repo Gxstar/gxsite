@@ -23,7 +23,8 @@
         {% for comment in comments.comments %}
         <div class="com">
             <div class="com-author">
-                <p>{{comment.fields.author}}</p>
+                <p>昵称：{{comment.fields.author}}</p>
+                <p>评论于{{comment.fields.createTime}}</p>
             </div>
             <div class="com-body">
                 <p>{{comment.fields.body}}</p>
@@ -40,7 +41,7 @@
             <ul id="page-list">
                 <li id="front"><i class="fas fa-angle-left"></i></li>
                 {% for page in comments.page_list %}
-                <li id="pagenum{{page}}" onclick="jump('{{page}}',this)">{{page}}</li>
+                <li id="pagenum{{page}}" onclick="jump('{{page}}',this)" class="pageicon">{{page}}</li>
                 {% endfor %}
                 <li id="next"><i class="fas fa-angle-right"></i></li>
             </ul>

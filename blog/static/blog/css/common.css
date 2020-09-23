@@ -16,6 +16,8 @@
 }
 .com-author{
     border-bottom: 1px dashed gray;
+    display: flex;
+    justify-content: space-between;
 }
 #page-zone li{
     cursor: pointer;

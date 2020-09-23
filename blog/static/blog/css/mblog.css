@@ -126,7 +126,7 @@ header>div {
     background-position: center center;
 }
 
-.article-body {
+.article-body,.show-comments,.new-comment {
     border: 1px solid darkgray;
     border-radius: 10px;
     margin-top: 2rem;

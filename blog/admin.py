@@ -17,7 +17,7 @@ class CommentsAdmin(admin.ModelAdmin):
     """
     文章模型管理
     """
-    list_display = ('body', 'author', 'createTime')
+    list_display = ('body', 'article', 'author', 'createTime')
 
 
 admin.site.register(Category)

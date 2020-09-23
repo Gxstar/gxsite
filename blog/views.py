@@ -1,7 +1,7 @@
 '''
 博客视图应用
 '''
-
+from datetime import datetime
 import json
 import markdown
 from bs4 import BeautifulSoup
@@ -10,7 +10,6 @@ from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
 from blog.models import Article, Category, Comments
 from blog.form import CaptchaForm
-from .form import CaptchaForm
 
 # Create your views here.
 
@@ -72,8 +71,7 @@ def article(request, article_id):
     mobile = is_mobile(request)
     if mobile is False:
         return render(request, "blog/post.html", context)
-    else:
-        return render(request, "mblog/m_post.html", context)
+    return render(request, "mblog/m_post.html", context)
 
 
 def is_mobile(request):
@@ -174,6 +172,12 @@ def get_comments(article_id, active_page):
     count = Comments.objects.count()  # 评论数
     json_data = serialize('json', comments)
     comments = json.loads(json_data)
+    # 更正序列化后时间变为字符串的错误，恢复为datetime类型
+    def changedate(time):
+        time['fields']['createTime'] = datetime.strptime(
+            time['fields']['createTime'].split('.')[0], '%Y-%m-%dT%H:%M:%S').strftime("%Y年%m月%d日%H:%M:%S")
+        return time
+    comments = list(map(changedate, comments))
     page_count = int(count/5.1)+1  # 评论页数
     pages = []  # 传递到前端的页码列表
     active_page = int(active_page)
@@ -214,9 +218,12 @@ def new_comment(request, article_id):
     给指定文章添加评论
     '''
     comment = {}
-    form = CaptchaForm(request.POST)
+    data = request.POST
+    form = CaptchaForm(data)
     if form.is_valid():
-        comment['status'] = 'success'
+        comment['status'] = 1  # 返回状态为1，则验证🐎验证通过
+        Comments.objects.create(author=data.get('username'), email=data.get(
+            'email'), body=data.get('body'), article=Article.objects.get(id=article_id))
     else:
-        comment['status'] = 'error'
+        comment['status'] = 0  # 返回状态为0，则验证🐎验证不通过
     return JsonResponse(comment)

@@ -3,8 +3,11 @@ from bs4 import BeautifulSoup
 import requests
 
 # Create your views here.
+
+
 def show_home(request):
-    return render(request,'index.html',get_background())
+    return render(request, 'index.html', {'url':'http://cdn.gxstar123.cn/jiuzhai-unsplash.jpg'})
+
 
 def get_background():
     '''获得每日bing图片作为首页背景

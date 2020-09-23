@@ -11,8 +11,7 @@ class CaptchaForm(forms.Form):
     '''
     username = forms.CharField(required=True, label='用户名', max_length=12, widget=forms.TextInput({
         'class': "content_in",
-        'placeholder': '用户名',
-    }))
+        'placeholder': '用户名',}))
     email = forms.EmailField(required=True, label='邮箱', widget=forms.EmailInput({
         'class': "content_in",
         'placeholder': '邮箱地址',

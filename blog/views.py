@@ -173,9 +173,11 @@ def get_comments(article_id, active_page):
     json_data = serialize('json', comments)
     comments = json.loads(json_data)
     # 更正序列化后时间变为字符串的错误，恢复为datetime类型
+
     def changedate(time):
         time['fields']['createTime'] = datetime.strptime(
-            time['fields']['createTime'].split('.')[0], '%Y-%m-%dT%H:%M:%S').strftime("%Y年%m月%d日%H:%M:%S")
+            time['fields']['createTime'].split('.')[0], '%Y-%m-%dT%H:%M:%S').strftime( \
+                "%Y年%m月%d日%H:%M:%S")
         return time
     comments = list(map(changedate, comments))
     page_count = int(count/5.1)+1  # 评论页数
@@ -210,7 +212,8 @@ def get_new_comment(request, article_id):
     获取指定文章指定页码评论
     '''
     page = int(request.GET.get('page'))
-    return JsonResponse(get_comments(article_id, page))
+    com_json = get_comments(article_id, page)
+    return JsonResponse(com_json)
 
 
 def new_comment(request, article_id):

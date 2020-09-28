@@ -24,6 +24,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.show_home),
     path('blog/', include('blog.urls')),
+    path('echarts/',include('echarts.urls')),
     path('mdeditor/', include('mdeditor.urls')),
     path('captcha/', include('captcha.urls')),
     re_path(r'^uploads/(?P<path>.*)$', serve,

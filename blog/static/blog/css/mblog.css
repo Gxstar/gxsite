@@ -35,6 +35,10 @@ code {
     font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
 }
 
+section {
+    letter-spacing: 1.75px;
+    color: #666;
+}
 /* 遮罩 */
 #mask {
     position: absolute;
@@ -203,10 +207,6 @@ header>div {
     padding-right: 15px;
 }
 
-section {
-    letter-spacing: 1.75px;
-    color: #666;
-}
 
 /* 页码处理区域 */
 #page-zone {

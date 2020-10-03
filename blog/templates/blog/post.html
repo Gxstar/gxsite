@@ -18,7 +18,7 @@
         </div>
     </article>
     <div class="show-comments">
-        <p id="com-header">文章评论</p>
+        <p>文章评论</p>
         {% if comments.comments %}
         {% for comment in comments.comments %}
         <div class="com">
@@ -60,6 +60,7 @@
         })
     </script>
     <div class="new-comment">
+        <p style="font-size: .85rem;">添加评论</p>
         <form action="" method="post" οnsubmit="return false;">
             {% csrf_token %}
             <div class="form-group">

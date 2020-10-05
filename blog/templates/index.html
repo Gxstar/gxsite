@@ -89,13 +89,19 @@
         text-decoration: none;
     }
 </style>
-
+<script>
+    var image_url=$.get("./api/images/",function(data){
+        console.log(data);
+        $("body").css('background-image','url('+data+'})');
+    })
+</script>
 <body>
     <div class="logo text-center">
         <img src="{% static 'blog/img/头像.jpg' %}" class="rounded-circle img-thumbnail" alt="头像">
         <h2 class="text-light" style="margin-top: 1rem; font-size: 1.75rem;">阿星的小站</h2>
         <h5 class="text-light" style="font-size: 1.25rem;margin-top: 0;"><a href="./blog/">博客</a></h5>
     </div>
+    
 </body>
 
 </html>

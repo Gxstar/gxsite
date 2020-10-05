@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,HttpResponse
 from bs4 import BeautifulSoup
 import requests
 
@@ -6,7 +6,15 @@ import requests
 
 
 def show_home(request):
-    return render(request, 'index.html', {'url':'http://cdn.gxstar123.cn/jiuzhai-unsplash.jpg'})
+    return render(request, 'index.html', {'url': 'http://cdn.gxstar123.cn/jiuzhai-unsplash.jpg'})
+
+
+def get_image(request):
+    """
+    获取封面api
+    """
+    data = get_background()
+    return HttpResponse(data['url'])
 
 
 def get_background():

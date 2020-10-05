@@ -26,6 +26,7 @@ urlpatterns = [
     path('blog/', include('blog.urls')),
     path('mdeditor/', include('mdeditor.urls')),
     path('captcha/', include('captcha.urls')),
+    path('api/images/',views.get_image),
     re_path(r'^uploads/(?P<path>.*)$', serve,
             {"document_root": settings.MEDIA_ROOT}),
 ]

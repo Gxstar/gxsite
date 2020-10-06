@@ -14,7 +14,7 @@ def get_image(request):
     获取封面api
     """
     data = get_background()
-    return HttpResponse(data['url'])
+    return HttpResponse(data,content_type="image/png")
 
 
 def get_background():
@@ -27,5 +27,6 @@ def get_background():
     xml_file = requests.get(origin_url).content
     bs_parse = BeautifulSoup(xml_file, "lxml")
     result_url = "https://cn.bing.com"+bs_parse.url.string
-    context['url'] = result_url
-    return context
+    image_file=requests.get(result_url).content
+    # context['url'] = result_url
+    return image_file

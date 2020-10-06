@@ -14,7 +14,7 @@
 <style>
     body {
         font-family: SimHei, KaiTi_GB2312, sans-serif;
-        background-image: url({{url}});
+        background-image: url("./api/images/");
         background-size: cover;
         background-repeat: no-repeat;
         background-attachment: fixed;
@@ -89,11 +89,6 @@
         text-decoration: none;
     }
 </style>
-<script>
-    var image_url=$.get("./api/images/",function(data){
-        $("body").css('background-image','url('+data+'})');
-    })
-</script>
 <body>
     <div class="logo text-center">
         <img src="{% static 'blog/img/头像.jpg' %}" class="rounded-circle img-thumbnail" alt="头像">

@@ -22,7 +22,18 @@
 #page-zone li{
     cursor: pointer;
 }
-
+/* 文章区域 */
+.markdown-body figcaption{
+    color: #999;
+    font-size: .85rem;
+    line-height: 1;
+    font-weight: 700;
+    margin: 10px auto 15px;
+    text-align: center;
+}
+.markdown-body figure>a:hover{
+    text-decoration: none;
+}
 /* 评论撰写区 */
 .new-comment{
     font-size: 1rem;

@@ -34,6 +34,24 @@
 .markdown-body figure>a:hover{
     text-decoration: none;
 }
+.markdown-body figure img{
+    border-radius: 5px;
+    border: 1px solid lightgray;
+    padding: 5px;
+}
+.markdown-body .toc{
+    border: 1px solid lightgrey;
+    border-radius: 10px;
+    padding-top: 10px;
+    background-color: #f3f5f7;
+    margin-bottom: 1rem;
+}
+.markdown-body .toc ul{
+    list-style-type: none;
+}
+.markdown-body .toc a{
+    color: black;
+}
 /* 评论撰写区 */
 .new-comment{
     font-size: 1rem;

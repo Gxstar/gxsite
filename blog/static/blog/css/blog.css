@@ -13,24 +13,27 @@ body {
     background-color: var(--gray);
 }
 
-h4{
-    margin:0;
+h4 {
+    margin: 0;
 }
 
-pre{
-    padding:10px;
-    border:1px solid #ddd;
+pre {
+    padding: 10px;
+    border: 1px solid #ddd;
     border-radius: 5px;
     font-size: 14px;
     line-height: 1.5;
 }
-code{
+
+code {
     font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
 }
+
 section {
     letter-spacing: 1.5px;
     color: #666;
 }
+
 .info-text {
     font-size: 0.75rem;
     color: #999;
@@ -43,6 +46,11 @@ section {
     margin: 0 auto;
 }
 
+@media screen and (min-width:1400px) {
+    .container {
+        max-width: 1400px;
+    }
+}
 
 .row {
     display: flex;
@@ -128,6 +136,43 @@ section {
     border-bottom: 1px solid var(--gray);
 }
 
+.head-img {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #eee;
+}
+
+.head-img>.img-l,
+.head-img>.img-r {
+    width: 45%;
+    height: 300px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.img-l {
+    margin-left: 30px;
+}
+
+.img-r {
+    margin-right: 30px;
+}
+
+.head-img>.img-r {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.img-r>div {
+    height: 145px;
+}
+
+.head-img .img-o {
+    background: rgba(34,34,34,0.5);
+    border-radius: 5px;
+}
+
 .article-body {
     padding: 25px 30px;
     display: flex;
@@ -158,6 +203,7 @@ section {
     height: calc(17vh);
     display: block;
     border-radius: 10px;
+    border: 1px solid #eee;
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
@@ -193,7 +239,7 @@ section {
     margin: 0px 15px;
     padding: 10px 15px;
     border-radius: 5px;
-    border:1px solid lightgray;
+    border: 1px solid lightgray;
     background-color: #fff;
 }
 
@@ -218,7 +264,7 @@ a:hover {
 }
 
 .cat-list {
-    margin:0;
+    margin: 0;
     padding-left: 0;
     text-align: left;
 }
@@ -292,12 +338,13 @@ a:hover {
     margin: 0 auto;
 }
 
-.text-muted{
+.text-muted {
     font-size: 0.75rem;
     letter-spacing: .5px;
     color: #666;
     line-height: 1.6;
 }
-.content a{
-    color:#666;
+
+.content a {
+    color: #666;
 }

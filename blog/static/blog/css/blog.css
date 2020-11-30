@@ -170,9 +170,13 @@ section {
 
 .head-img .img-o {
     background: rgba(34,34,34,0.5);
+    /* box-shadow: 6px 6px 6px rgba(0,0,0,0.3); */
     border-radius: 5px;
 }
-
+.head-img .img-o:hover{
+    /* box-shadow: 6px 6px 6px rgba(0,0,0,0.3); */
+    opacity: 0.8;
+}
 .article-body {
     padding: 25px 30px;
     display: flex;
